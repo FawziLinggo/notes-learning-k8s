@@ -114,7 +114,7 @@ We will install these packages on all of your machines:
 
     sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 
-    sudo systemctl enable --now kubele
+    sudo systemctl enable --now kubelet
   ```
 
 ### 6. Initializing your control-plane node 
@@ -122,8 +122,10 @@ We will install these packages on all of your machines:
 The control-plane node is the machine where the control plane components run, including etcd (the cluster database) and the API Server (which the kubectl command line tool communicates with).
 
 ```bash
-kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock
+kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock --pod-network-cidr=10.244.0.0/16
 ```
+[```issue : NetworkPlugin cni failed```][issue_calico1]
+
 [kubeadm init][kubeadm_init] then downloads and installs the cluster control plane components. This may take several minutes. After it finishes you should see:
 
 ```bash
@@ -157,4 +159,4 @@ source .zshrc # or source .bashrc
 [why_disable_swap]: https://serverfault.com/questions/881517/why-disable-swap-on-kubernetes
 [cri-dcoker]: https://github.com/Mirantis/cri-dockerd
 [kubeadm_init]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-
+[issue_calico1]: https://github.com/projectcalico/calico/issues/2418
