@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: activemq
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: activemq
+   template:
+      metadata:
+         labels:
+            app: activemq
+      spec:
+         containers:
+            - image: codingpuss/activemq:5.17.2-jre-19-alpine
+              name: activemq
+              imagePullPolicy: Always
